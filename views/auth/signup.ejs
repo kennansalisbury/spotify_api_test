@@ -1,0 +1,40 @@
+<h1>Sign Up Here</h1>
+
+<div class="row">
+    <form method="POST" action="/auth/signup" class="col s12"> 
+        <div class="row">
+            <div class="input-field col s6">
+              <input id="first_name" type="text" class="validate" name="first_name">
+              <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="last_name" type="text" class="validate" name="last_name">
+              <label for="last_name">Last Name</label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" name="email">
+              <label for="email">Email</label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" name="password">
+              <label for="password">Password</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+              <input id="ver_password" type="password" class="validate" name="ver_password">
+              <label for="ver_password">Verify Password</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light #80d8ff light-blue darken-3" type="submit" name="action">Sign Up
+            <i class="material-icons right">send</i>
+        </button>
+    </form>
+</div>
