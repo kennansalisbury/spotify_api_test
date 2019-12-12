@@ -7,4 +7,9 @@ body {
 nav {
     width: 100%;
     background-color: #ddd;
+    text-align: center;
+}
+
+main {
+    text-align: center;
 }
