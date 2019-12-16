@@ -1,4 +1,5 @@
 // Required node modules
+require('dotenv').config() //provide access to variables inside .env files
 let express = require('express')
 let layouts = require('express-ejs-layouts')
 
@@ -9,6 +10,8 @@ let app = express()
 app.set('view engine', 'ejs')
 app.use(layouts)
 app.use('/', express.static('static'))
+app.use(express.urlencoded({extended: false}))
+
 
 // Add any controllers
 app.use('/auth', require('./controllers/auth'))
@@ -25,6 +28,6 @@ app.get('*', (req, res) => {
 })
 
 // Listen on local port
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => { //process.env.PORT is for when pushing to production the server will automatically generate a port in env file to use
     console.log('👂🏻👂🏻👂🏻👂🏻')
 })

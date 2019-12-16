@@ -7,7 +7,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    res.send('POST /auth/login')
+    res.send('post /login')
 })
 
 router.get('/signup', (req, res) => {
@@ -15,7 +15,8 @@ router.get('/signup', (req, res) => {
 })
 
 router.post('/signup', (req, res) => {
-    res.send('POST /auth/signup')
+    console.log('POST', req.body)
+    res.send(req.body)
 })
 
 router.get('/logout', (req, res) => {
