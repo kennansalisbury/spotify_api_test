@@ -7,16 +7,20 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    res.send('post /login')
+    res.send(req.body)
 })
 
 router.get('/signup', (req, res) => {
-    res.render('auth/signup')
+    res.render('auth/signup', {data: {}})
 })
 
 router.post('/signup', (req, res) => {
-    console.log('POST', req.body)
-    res.send(req.body)
+    if(req.body.password !== req.body.ver_password) {
+        req.flash('error', 'Passwords do not match!') //first argument is type of message, second argument is the message
+        res.render('auth/signup', {data: req.body, alerts: req.flash()}) //pass through the existing form information
+    } else {
+        res.send(req.body)
+    }
 })
 
 router.get('/logout', (req, res) => {

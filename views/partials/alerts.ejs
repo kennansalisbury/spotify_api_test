@@ -1,0 +1,20 @@
+<%if (alerts && alerts.error) {%>
+    <div class="card-panel red lighten-4 red-text">
+    <button class="close right red lighten-4 red-text">
+        <i class="material-icons">close</i>
+    </button>
+    <% alerts.error.forEach(msg => { %>
+      <p><%= msg %></p>
+  <% }) %>
+    </div>
+<%}%>
+
+<script>
+    [...document.getElementsByClassName('close')].forEach(element => { //using [... ] translates it to an array
+    element.addEventListener('click', function() {
+      [...document.getElementsByClassName('card-panel')].forEach(box => {
+        box.style.display = 'none';
+      });
+    });
+  });
+</script>

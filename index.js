@@ -2,6 +2,8 @@
 require('dotenv').config() //provide access to variables inside .env files
 let express = require('express')
 let layouts = require('express-ejs-layouts')
+let flash = require('connect-flash')
+let session = require('express-session')
 
 // Declare express app varaiable
 let app = express()
@@ -11,6 +13,16 @@ app.set('view engine', 'ejs')
 app.use(layouts)
 app.use('/', express.static('static'))
 app.use(express.urlencoded({extended: false}))
+app.use(session({
+    secret: process.env.SESSION_SECRET
+}))
+app.use(flash()) //depends on session; must come after app.use session statement
+
+// Custom middleware: Add variables to locals for each page
+app.use((req, res, next) => {
+    res.locals.alerts = req.flash()
+    next()
+})
 
 
 // Add any controllers
