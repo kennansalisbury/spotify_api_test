@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 
 //error route - ALWAYS THE BOTTOM ROUTE
 app.get('*', (req, res) => {
-    res.render('error404')
+    res.render('error')
 })
 
 // Listen on local port
