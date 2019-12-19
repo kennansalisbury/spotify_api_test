@@ -1,20 +1,22 @@
-<%if (alerts && alerts.error) {%>
-    <div class="card-panel red lighten-4 red-text">
-    <button class="close right red lighten-4 red-text">
-        <i class="material-icons">close</i>
-    </button>
-    <% alerts.error.forEach(msg => { %>
-      <p><%= msg %></p>
-  <% }) %>
-    </div>
-<%}%>
 
 <script>
-    [...document.getElementsByClassName('close')].forEach(element => { //using [... ] translates it to an array
-    element.addEventListener('click', function() {
-      [...document.getElementsByClassName('card-panel')].forEach(box => {
-        box.style.display = 'none';
-      });
-    });
-  });
+  let errors= '<%- alerts.error%>'
+  let successes = '<%- alerts.successes %>'  
+
+  document.addEventListener('DOMContentLoaded', function(){
+    if(errors) {
+      M.toast({
+        html: errors,
+        classes: 'red lighten-2',
+        displayLength: 2000
+      })
+    }
+    if (successes) {
+      M.toast({
+        html: successes,
+        classes: 'green lighten-2',
+        displayLength: 2000
+      })
+    }
+  })
 </script>

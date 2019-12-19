@@ -3,20 +3,26 @@ let router = require('express').Router()
 
 let db = require('../models')
 
+let passport = require('../config/passportConfig')
+
 // Define routes
 router.get('/login', (req, res) => {
     res.render('auth/login')
 })
 
-router.post('/login', (req, res) => {
-    res.send(req.body)
-})
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/profile',
+    successFlash: 'Yay, we logged in!',
+    failureRedirect: '/auth/login',
+    failureFlash: 'Invalid credentials'
+
+}))
 
 router.get('/signup', (req, res) => {
     res.render('auth/signup', {data: {}})
 })
 
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res, next) => {
     if(req.body.password !== req.body.ver_password) {
         req.flash('error', 'Passwords do not match!') //first argument is type of message, second argument is the message
         res.render('auth/signup', {data: req.body, alerts: req.flash()}) //pass through the existing form information
@@ -29,7 +35,12 @@ router.post('/signup', (req, res) => {
             if(wasCreated) {
                 // this is the intended user action
                 // automatically log in the user to their newly created account
-                res.send('Successful Create User - go look at DB')
+                passport.authenticate('local', {
+                    successRedirect: '/profile',
+                    successFlash: 'Yay, we logged in!',
+                    failureRedirect: '/auth/login',
+                    failureFlash: 'this should not happen'
+                }) (req, res, next)
             } else {
                 //the user already has an account
                 req.flash('error', 'Account already exists - go to the login page')
@@ -56,8 +67,11 @@ router.post('/signup', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-    res.send('GET /auth/logout')
+    req.logout() // Throw away session data of logged in user
+    req.flash('success', 'Goodbye!')
+    res.redirect('/')
 })
+
 
 // Export the router object so we can include it in other files
 module.exports = router
