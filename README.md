@@ -95,7 +95,7 @@ sequelize db:migrate
 
 * SESSION_SECRET: any string (can be random - usually a hash in production)
 
-Note: if using OAuth - switch to directions on `with-oauth` branch
+>Note: if using OAuth - switch to directions on `with-oauth` branch
 
 #### 9. Run server; make sure it works
 
