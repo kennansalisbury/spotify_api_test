@@ -4,6 +4,8 @@ let express = require('express')
 let layouts = require('express-ejs-layouts')
 let flash = require('connect-flash')
 let session = require('express-session')
+var cors = require('cors');
+var cookieParser = require('cookie-parser');
 
 // Declare express app varaiable
 let app = express()
@@ -14,6 +16,8 @@ let passport = require('./config/passportConfig')
 app.set('view engine', 'ejs')
 app.use(layouts)
 app.use('/', express.static('static'))
+app.use(cors())
+app.use(cookieParser())
 app.use(express.urlencoded({extended: false}))
 app.use(session({
     secret: process.env.SESSION_SECRET
@@ -38,6 +42,25 @@ app.use('/profile', require('./controllers/profile'))
 app.get('/', (req, res) => {
     // res.send('<h1>Hello World</h1>')
     res.render('home')
+})
+
+app.get('/test', (req, res) => {
+    var axios = require("axios");
+
+    axios.request({
+        url: "/oauth2/token",
+        method: "post",
+        baseURL: "https://api.petfinder.com/v2",
+        auth: {
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET
+        },
+        data: {
+            "grant_type": "client_credentials", 
+        }
+    }).then(function(res) {
+        console.log(res);
+    });
 })
 
 //error route - ALWAYS THE BOTTOM ROUTE
